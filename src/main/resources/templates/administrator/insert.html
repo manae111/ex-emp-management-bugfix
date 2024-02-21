@@ -52,8 +52,10 @@
                 <legend>
                   管理者登録<br />(システムにログインできる管理者を登録します)
                 </legend>
+                <!-- パスワード不一致エラーメッセージ -->
+                <label th:if="${passwordError}" th:text="${passwordError}" class="error-messages"></label>
                 <!-- メールアドレス重複エラーメッセージ -->
-                <p th:if="${DuplicationMailaddressError}" th:text="${DuplicationMailaddressError}" class="error-messages"></p>
+                <label th:if="${DuplicationMailaddressError}" th:text="${DuplicationMailaddressError}" class="error-messages"></label>
                 <!-- 氏名 -->
                 <div class="form-group">
                   <div class="row">
@@ -126,6 +128,32 @@
                     </div>
                   </div>
                 </div>
+                <!-- 確認用パスワード -->
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <label for="confirmationPassword"> 確認用パスワード: </label>
+                      <!-- ラベル追加 -->
+                      <label id="passwordErrorMessage" class="error-messages"></label>
+                      <label
+                        th:errors="*{confirmationPassword}"
+                        class="error-messages"
+                      >
+                        確認用パスワードを入力してください
+                      </label>
+                      <input
+                        type="password"
+                        name="confirmationPassword"
+                        id="confirmationPassword"
+                        class="form-control"
+                        placeholder="confirmationPassword"
+                        th:field="*{confirmationPassword}"
+                        th:errorclass="error-input"
+                        value="xxxxxxxx"
+                      />
+                    </div>
+                  </div>
+                </div>
                 <!-- 登録ボタン -->
                 <div class="form-group">
                   <div class="row">
@@ -146,6 +174,7 @@
     </div>
     <!-- end container -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="../../static/js/bootstrap.min.js"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/management.js}"></script>
   </body>
 </html>

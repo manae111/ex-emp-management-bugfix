@@ -19,6 +19,7 @@ import com.example.service.AdministratorService;
 
 import jakarta.servlet.http.HttpSession;
 
+
 /**
  * 管理者情報を操作するコントローラー.
  * 
@@ -78,6 +79,13 @@ public class AdministratorController {
 	public String insert(@Validated InsertAdministratorForm form,
 						 BindingResult result,
 						 Model model) {
+		//パスワードと確認用パスワードが一致しているか確認し
+		//一致していない場合は登録画面にリダイレクト
+		if (!form.getPassword().equals(form.getConfirmationPassword())) {
+			model.addAttribute("passwordError", "パスワードが一致していません");
+			return "administrator/insert";
+		}					
+
 		if (result.hasErrors()) {
 			return toInsert();
 		}
@@ -90,8 +98,11 @@ public class AdministratorController {
 			return "administrator/insert";
 		}
 		administratorService.insert(administrator);
-		return "administrator/login";
+		//ダブルサブミット対策
+		return "redirect:/";
 	}
+
+	
 
 	/////////////////////////////////////////////////////
 	// ユースケース：ログインをする
@@ -125,6 +136,7 @@ public class AdministratorController {
 			redirectAttributes.addFlashAttribute("errorMessage", "メールアドレスまたはパスワードが不正です。");
 			return "redirect:/";
 		}
+		session.setAttribute("administratorName", administrator.getName());
 		return "redirect:/employee/showList";
 	}
 
