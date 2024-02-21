@@ -52,6 +52,8 @@
                 <legend>
                   管理者登録<br />(システムにログインできる管理者を登録します)
                 </legend>
+                <!-- メールアドレス重複エラーメッセージ -->
+                <p th:if="${DuplicationMailaddressError}" th:text="${DuplicationMailaddressError}" class="error-messages"></p>
                 <!-- 氏名 -->
                 <div class="form-group">
                   <div class="row">

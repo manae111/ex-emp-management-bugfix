@@ -3,6 +3,9 @@ package com.example.controller;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -67,17 +70,27 @@ public class AdministratorController {
 
 	/**
 	 * 管理者情報を登録します.
-	 * 
+	 * 入力値チェック
 	 * @param form 管理者情報用フォーム
 	 * @return ログイン画面へリダイレクト
 	 */
 	@PostMapping("/insert")
-	public String insert(InsertAdministratorForm form) {
+	public String insert(@Validated InsertAdministratorForm form,
+						 BindingResult result,
+						 Model model) {
+		if (result.hasErrors()) {
+			return toInsert();
+		}
 		Administrator administrator = new Administrator();
 		// フォームからドメインにプロパティ値をコピー
 		BeanUtils.copyProperties(form, administrator);
+		//メールアドレス重複エラー対処
+		if (administratorService.DuplicationMailaddress(administrator.getMailAddress()) != null) {
+			model.addAttribute("DuplicationMailaddressError", "既に登録されているメールアドレスです");
+			return "administrator/insert";
+		}
 		administratorService.insert(administrator);
-		return "employee/list";
+		return "administrator/login";
 	}
 
 	/////////////////////////////////////////////////////
@@ -95,12 +108,18 @@ public class AdministratorController {
 
 	/**
 	 * ログインします.
-	 * 
+	 * 入力値チェック追加
 	 * @param form 管理者情報用フォーム
 	 * @return ログイン後の従業員一覧画面
 	 */
 	@PostMapping("/login")
-	public String login(LoginForm form, RedirectAttributes redirectAttributes) {
+	public String login(@Validated LoginForm form,
+						BindingResult result,
+						RedirectAttributes redirectAttributes
+						) {
+		if (result.hasErrors()) {
+			return toLogin();
+		}
 		Administrator administrator = administratorService.login(form.getMailAddress(), form.getPassword());
 		if (administrator == null) {
 			redirectAttributes.addFlashAttribute("errorMessage", "メールアドレスまたはパスワードが不正です。");
