@@ -42,10 +42,12 @@
 
             <!-- ここにモックのform要素を貼り付けます -->
 
+            <!-- 入力値チェックのためth:object="${loginForm}"を追加 -->
             <form
               method="post"
               action="../employee/list.html"
               th:action="@{/login}"
+              th:object="${loginForm}"
             >
               <fieldset>
                 <legend>ログイン</legend>
@@ -58,22 +60,30 @@
                 </div>
                 <div class="form-group">
                   <label for="mailAddress">メールアドレス:</label>
+                  <!-- 入力値チェック -->
+                  <label th:errors="*{mailAddress}" class="error-messages">エラー！</label>
                   <input
                     type="text"
                     name="mailAddress"
                     id="mailAddress"
                     class="form-control"
                     placeholder="Email"
+                    th:field="*{mailAddress}"
+                    th:errorclass="error-input"
                   />
                 </div>
                 <div class="form-group">
                   <label for="inputPassword">パスワード:</label>
+                  <!-- 入力値チェック -->
+                  <label th:errors="*{password}" class="error-messages">エラー！</label>
                   <input
                     type="password"
                     name="password"
                     id="inputPassword"
                     class="form-control"
                     placeholder="Password"
+                    th:field="*{password}"
+                    th:errorclass="error-input"
                   />
                 </div>
                 <div class="form-group">
