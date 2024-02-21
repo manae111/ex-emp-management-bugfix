@@ -49,7 +49,7 @@ public class AdministratorService {
 	 * メールアドレスから管理者情報を取得します.
 	 * 
 	 * @param mailAddress メールアドレス
-	 * @return 管理者情報 存在しない場合はnullを返します
+	 * @return 管理者情報 存在しない場合はnullが返ります
 	 */
 	public Administrator DuplicationMailaddress(String mailAddress) {
 		return administratorRepository.findByMailAddress(mailAddress);
