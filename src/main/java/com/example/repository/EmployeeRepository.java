@@ -70,7 +70,6 @@ public class EmployeeRepository {
 		SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
 
 		Employee development = template.queryForObject(sql, param, EMPLOYEE_ROW_MAPPER);
-		System.out.println("!!!!!!!!エラー3!!!!!!!!");
 		return development;
 	}
 
@@ -82,5 +81,19 @@ public class EmployeeRepository {
 
 		String updateSql = "UPDATE employees SET dependents_count=:dependentsCount WHERE id=:id";
 		template.update(updateSql, param);
+	}
+
+	/**
+	 * 従業員名からあいまい検索された従業員情報を取得します.
+	 * 
+	 * @param name 検索したい従業員名
+	 * @return 全従業員一覧 従業員が存在しない場合はサイズ0件の従業員一覧を返します
+	 * 
+	 */
+	public List<Employee> findByName(String searchName) {
+		String sql = "SELECT id,name,image,gender,hire_date,mail_address,zip_code,address,telephone,salary,characteristics,dependents_count FROM employees WHERE name LIKE :name";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("name", "%" + searchName + "%");
+		List<Employee> searchList = template.query(sql,param,EMPLOYEE_ROW_MAPPER);
+		return searchList;
 	}
 }

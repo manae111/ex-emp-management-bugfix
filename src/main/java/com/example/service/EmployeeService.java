@@ -41,7 +41,6 @@ public class EmployeeService {
 	 */
 	public Employee showDetail(Integer id) {
 		Employee employee = employeeRepository.load(id);
-		System.out.println("!!!!!!!!エラー!!!!!!!!");//来てない
 		return employee;
 	}
 
@@ -52,5 +51,16 @@ public class EmployeeService {
 	 */
 	public void update(Employee employee) {
 		employeeRepository.update(employee);
+	}
+
+	/**
+	 * 従業員名からあいまい検索された従業員情報を取得します.
+	 * 
+	 * @param name 検索したい従業員名
+	 * @return 検索された従業員情報
+	 * @exception org.springframework.dao.DataAccessException 従業員が存在しない場合は例外を発生します
+	 */
+	public List<Employee> search(String searchName) {
+		return employeeRepository.findByName(searchName);
 	}
 }
