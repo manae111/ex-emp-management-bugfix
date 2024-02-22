@@ -130,6 +130,7 @@ public class AdministratorController {
 						) {
 		if (result.hasErrors()) {
 			return toLogin();
+			
 		}
 		Administrator administrator = administratorService.login(form.getMailAddress(), form.getPassword());
 		if (administrator == null) {
