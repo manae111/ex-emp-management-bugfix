@@ -70,7 +70,6 @@ public class EmployeeController {
 	public String showDetail(@RequestParam("id")String id, Model model) {
 		Employee employee = employeeService.showDetail(Integer.parseInt(id));
 		model.addAttribute("employee", employee);
-		System.out.println("！！！！！エラー！！！！！");//来てない
 		return "employee/detail";
 	}
 
@@ -94,4 +93,15 @@ public class EmployeeController {
 		employeeService.update(employee);
 		return "redirect:/employee/showList";
 	}
+
+	/////////////////////////////////////////////////////
+	// ユースケース：従業員をあいまい検索する
+	/////////////////////////////////////////////////////
+	@PostMapping("/search")
+	public String search(@RequestParam("searchName")String searchName, Model model) {
+		List<Employee> employeeList = employeeService.search(searchName);
+		model.addAttribute("employeeList", employeeList);
+		return "employee/list";
+	}
+	
 }

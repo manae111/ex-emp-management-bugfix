@@ -98,7 +98,13 @@
           <!-- ここから上を編集する必要はありません -->
 
           <!-- ここにモックのtable要素を貼り付けます -->
-
+          <!-- 従業員あいまい検索フォーム -->
+          <form method="post"
+                action="../employee/list.html"
+                th:action="@{/employee/search}">
+            従業員検索：<input type="text" name="searchName"/>
+            <button type="submit" class="btn btn-primary">検索</button>
+          </form>
           <table class="table table-striped">
             <thead>
               <tr>
