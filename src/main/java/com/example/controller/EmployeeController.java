@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.domain.Employee;
 import com.example.form.UpdateEmployeeForm;
@@ -66,9 +67,10 @@ public class EmployeeController {
 	 * @return 従業員詳細画面
 	 */
 	@GetMapping("/showDetail")
-	public String showDetail(String id, Model model) {
+	public String showDetail(@RequestParam("id")String id, Model model) {
 		Employee employee = employeeService.showDetail(Integer.parseInt(id));
 		model.addAttribute("employee", employee);
+		System.out.println("！！！！！エラー！！！！！");//来てない
 		return "employee/detail";
 	}
 
