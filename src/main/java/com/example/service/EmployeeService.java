@@ -56,11 +56,16 @@ public class EmployeeService {
 	/**
 	 * 従業員名からあいまい検索された従業員情報を取得します.
 	 * 
-	 * @param name 検索したい従業員名
+	 * @param searchName 検索したい従業員名
 	 * @return 検索された従業員情報
-	 * @exception org.springframework.dao.DataAccessException 従業員が存在しない場合は例外を発生します
+	 * 
 	 */
 	public List<Employee> search(String searchName) {
 		return employeeRepository.findByName(searchName);
+	}
+
+	public void register(Employee employee) {
+		System.out.println("！！！！！！！！！エラー３！！！！！！！！！！");
+		employeeRepository.insertEmployee(employee);
 	}
 }

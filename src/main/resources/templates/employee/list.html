@@ -65,6 +65,12 @@
                   >従業員管理</a
                 >
               </li>
+              <!-- 従業員登録 -->
+              <li>
+                <a href="register.html" th:href="@{/employee/toRegister}"
+                  >従業員登録</a
+                >
+              </li>
             </ul>
             <p class="navbar-text navbar-right">
               <!-- 管理者名を表示-->
@@ -102,8 +108,13 @@
           <form method="post"
                 action="../employee/list.html"
                 th:action="@{/employee/search}">
-            従業員検索：<input type="text" name="searchName"/>
+            従業員検索：<input type="text" name="searchName" id="searchName"/>
             <button type="submit" class="btn btn-primary">検索</button>
+            <div th:if="${noEmployeeError}" class="alert alert-danger">
+              <p th:text="${noEmployeeError}">
+                検索結果なし
+              </p>
+            </div>
           </form>
           <table class="table table-striped">
             <thead>
@@ -140,7 +151,9 @@
     </div>
     <!-- end container -->
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="../../static/js/bootstrap.min.js"></script>
+    <script th:src=@{https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js}></script>
+    <script th:src=@{/js/bootstrap.min.js}></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script th:src=@{/js/Autocomplete.js}></script> <!-- 新しく作成したJavaScriptファイルを読み込む -->
   </body>
 </html>

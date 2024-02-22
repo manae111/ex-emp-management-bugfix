@@ -86,7 +86,7 @@ public class EmployeeRepository {
 	/**
 	 * 従業員名からあいまい検索された従業員情報を取得します.
 	 * 
-	 * @param name 検索したい従業員名
+	 * @param searchName 検索したい従業員名
 	 * @return 全従業員一覧 従業員が存在しない場合はサイズ0件の従業員一覧を返します
 	 * 
 	 */
@@ -95,5 +95,22 @@ public class EmployeeRepository {
 		SqlParameterSource param = new MapSqlParameterSource().addValue("name", "%" + searchName + "%");
 		List<Employee> searchList = template.query(sql,param,EMPLOYEE_ROW_MAPPER);
 		return searchList;
+	}
+
+	/**
+	 * 従業員情報を挿入します.
+	 * 
+	 * @param administrator 管理者情報
+	 */
+	public void insertEmployee(Employee employee) {
+		SqlParameterSource param = new BeanPropertySqlParameterSource(employee);
+		String sql = """
+			insert into employees
+			(id,name,image,gender,hire_date,mail_address,zip_code,address,telephone,salary,characteristics,dependents_count)
+			values
+			(:id,:name,:image,:gender,:hireDate,mailAddress,zipCode,address,telephone,salary,characteristics,dependentsCount);
+			""";
+		System.out.println("！！！！！！！！！エラー！！！！！！！！！！");
+		template.update(sql, param);
 	}
 }

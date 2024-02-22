@@ -9,3 +9,8 @@
 .error-messages {
   color: #ff0000;
 }
+
+/* Autocompleteのデフォルトメッセージを非表示にする */
+.ui-helper-hidden-accessible {
+  display: none;
+}
