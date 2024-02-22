@@ -16,7 +16,7 @@ public class SecurityConfig {
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
+    
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -28,8 +28,8 @@ public class SecurityConfig {
             new AntPathRequestMatcher("/login/**"), // ログイン成功後のページへのアクセスを許可します
             new AntPathRequestMatcher("/toInsert/**"),
             new AntPathRequestMatcher("/insert/**"),
-            new AntPathRequestMatcher("/"),
-            new AntPathRequestMatcher("/employee/**")
+            new AntPathRequestMatcher("/employee/**"),
+            new AntPathRequestMatcher("/error/**")
         ).permitAll()
         .anyRequest().authenticated())
     .formLogin(formLogin -> formLogin

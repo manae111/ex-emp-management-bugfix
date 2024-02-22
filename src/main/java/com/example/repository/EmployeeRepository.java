@@ -70,7 +70,7 @@ public class EmployeeRepository {
 		SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
 
 		Employee development = template.queryForObject(sql, param, EMPLOYEE_ROW_MAPPER);
-
+		System.out.println("!!!!!!!!エラー3!!!!!!!!");
 		return development;
 	}
 
